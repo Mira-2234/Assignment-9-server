@@ -336,10 +336,7 @@ const run = async () => {
             }
         });
 
-        // ══════════════════════════════════════
-        //  REQUESTS ROUTES
-        // ══════════════════════════════════════
-
+  
         // GET my requests — private
         app.get('/requests', verifyToken, async (req, res) => {
             try {
@@ -449,14 +446,14 @@ const run = async () => {
                         return res.status(400).json({ message: 'Another request already approved' });
                     }
 
-                    // Pet কে adopted mark করো
+                    //  adopted mark
                     const petFilter = ObjectId.isValid(request.petId) && request.petId.length === 24
                         ? { _id: new ObjectId(request.petId) }
                         : { _id: request.petId };
 
                     await petsCollection.updateOne(petFilter, { $set: { status: 'adopted' } });
 
-                    // বাকি requests reject করো
+                    // requests reject
                     await requestsCollection.updateMany(
                         { petId: request.petId, _id: { $ne: new ObjectId(id) }, status: 'pending' },
                         { $set: { status: 'rejected' } }
