@@ -239,7 +239,7 @@ const run = async () => {
             }
         });
 
-        // GET my listings — private
+        // GET my listings — private route
         app.get('/pets/my-listings', verifyToken, async (req, res) => {
             try {
                 const pets = await petsCollection
