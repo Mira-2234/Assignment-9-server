@@ -9,7 +9,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app  = express();
 const port = process.env.PORT || 5000;
 
-// ── Middleware ──
+//Middleware 
 app.use(cors({
     origin: [
         'http://localhost:3000',
@@ -20,7 +20,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// ── MongoDB ──
+// MongoDB
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, {
     serverApi: {
@@ -30,7 +30,7 @@ const client = new MongoClient(uri, {
     },
 });
 
-// ── JWT Middleware ──
+// JWT Middleware
 const verifyToken = (req, res, next) => {
     const token = req.cookies?.token;
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
@@ -41,7 +41,7 @@ const verifyToken = (req, res, next) => {
     });
 };
 
-// ── Cookie Helper ──
+// Cookie Helper
 const setCookie = (res, token) => {
     res.cookie('token', token, {
         httpOnly: true,
@@ -61,9 +61,7 @@ const run = async () => {
 
         console.log("✅ Connected to MongoDB!");
 
-        // ══════════════════════════════════════
-        //  AUTH ROUTES
-        // ══════════════════════════════════════
+        
 
         // Register
         app.post('/register', async (req, res) => {
@@ -138,13 +136,13 @@ const run = async () => {
             }
         });
 
-        // Google login → JWT issue
+        // Google login - JWT issue
         app.post('/auth/token', async (req, res) => {
             try {
                 const { email, name, photoURL } = req.body;
                 if (!email) return res.status(400).json({ message: 'Email required' });
 
-                // User MongoDB তে save করো (না থাকলে)
+        
                 const exists = await usersCollection.findOne({ email });
                 if (!exists) {
                     await usersCollection.insertOne({
@@ -179,9 +177,7 @@ const run = async () => {
             }).json({ success: true });
         });
 
-        // ══════════════════════════════════════
-        //  PETS ROUTES
-        // ══════════════════════════════════════
+  
 
         // GET all pets — public (search + filter + sort)
         app.get('/pets', async (req, res) => {
