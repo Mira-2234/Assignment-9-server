@@ -314,7 +314,7 @@ const run = async () => {
             }
         });
 
-        // DELETE pet — private (owner)
+        // Delete pet — private (owner)
         app.delete('/pets/:id', verifyToken, async (req, res) => {
             try {
                 const { id } = req.params;
