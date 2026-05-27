@@ -271,7 +271,7 @@ const run = async () => {
             }
         });
 
-        // POST add pet — private
+        // POST add pet — private (owner)
         app.post('/pets', verifyToken, async (req, res) => {
             try {
                 const pet = {
