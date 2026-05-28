@@ -59,7 +59,7 @@ Backend API for Pet Adoption Platform built using Node.js, Express, and MongoDB.
 ## 🚀 Installation & Setup
 
 ```bash
-git clone <server-repo-link>
+git clone 
 cd server
 npm install
 npm start
